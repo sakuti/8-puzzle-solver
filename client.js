@@ -11,7 +11,7 @@
  */
 async function ratkaise() {
 	const TIMEOUT_BETWEEN_MOVES = 150;
-	const INTIAL_STATE = [[null, null, null], [null, null, null], [null, null, null]]
+	const INITIAL_STATE = [[null, null, null], [null, null, null], [null, null, null]]
 	
 	// Get the numbers from the cells and put them in the initial state
 	document.querySelectorAll('.cell').forEach((cell, index) => {
@@ -19,10 +19,10 @@ async function ratkaise() {
 		
 		const position = [
 			cell.getAttribute('data-position')[0],
-			cell.getAttribute('data-position')[1]
+			cell.getAttribute('data-position')[2]
 		]
 	
-		INTIAL_STATE[position[0]][position[1]] = number;
+		INITIAL_STATE[position[0]][position[1]] = number;
 	})
 	
 	// Clear the console and alert the user that the algorithm is being used
@@ -35,7 +35,7 @@ async function ratkaise() {
 		headers: {
 			'Content-Type': 'application/json'
 		},
-		body: JSON.stringify({ INTIAL_STATE })
+		body: JSON.stringify({ INITIAL_STATE })
 	}).then(res => res.json()).then(data => {
 		// Loop through each move and click the correct cell
 		data.forEach((move, moveIndex) => {
@@ -43,7 +43,7 @@ async function ratkaise() {
 				for (let j = 0; j < move[i].length; j++) {
 					if (move[i][j] === null) {
 						setTimeout(() => {
-								document.querySelector(`.cell[data-position="${i}${j}"]`).dispatchEvent(new Event('mousedown'))
+								document.querySelector(`.cell[data-position="${i}-${j}"]`).dispatchEvent(new Event('mousedown'))
 						}, moveIndex * TIMEOUT_BETWEEN_MOVES)
 						break;
 					}

@@ -221,7 +221,8 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.post('/solve', (req, res) => {
-	const initialState = req.body.initialState;
+	console.log(req.body)
+	const initialState = req.body.INITIAL_STATE;
 	const path = aStarSearch(initialState);
 	res.type('json');
 	res.json(path);
